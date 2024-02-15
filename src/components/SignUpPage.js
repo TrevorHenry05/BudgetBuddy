@@ -1,27 +1,23 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from React Router
-import './Style.css'; // Import CSS file for styling
-import logo from './img/logo.jpg';
+import React, { useState } from "react";
+import { Link } from "react-router-dom"; // Import Link from React Router
+import "./Style.css"; // Import CSS file for styling
+import logo from "./img/logo.jpg";
 
 function SignUpPage() {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [retypedPass, setRetypedPass] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [retypedPass, setRetypedPass] = useState("");
+  const [userName, setUserName] = useState("");
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
 
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Re-password:', retypedPass);
-    console.log('First Name:', firstName);
-    console.log('Last Nmae:', lastName);
+    console.log("Email:", email);
+    console.log("Password:", password);
+    console.log("Re-password:", retypedPass);
+    console.log("UserName:", userName);
 
-    // Connect with back end and route to dashboard 
-    
+    // Connect with back end and route to dashboard
   };
 
   return (
@@ -31,50 +27,44 @@ function SignUpPage() {
       <p>Please sign up or log in to access your account.</p>
       <div className="form-container">
         <form onSubmit={handleSubmit}>
-          <input 
-            type="email" 
-            name="email" 
-            placeholder="Email" 
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <br/>
-          <input 
-            type="text" 
-            name="firstName" 
-            placeholder="First Name" 
-            onChange={(e) => setFirstName(e.target.value)}
+          <br />
+          <input
+            type="text"
+            name="username"
+            placeholder="Username"
+            onChange={(e) => setUserName(e.target.value)}
             required
           />
-          <br/>
-          <input 
-            type="text" 
-            name="lastName" 
-            placeholder="Last Name" 
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
-          <br/>
-          <input 
-            type="password" 
-            name="password" 
-            placeholder="Password" 
+          <br />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
-            required 
+            required
           />
-          <br/>
-          <input 
-            type="password" 
-            name="repassword" 
-            placeholder="Re-enter Password" 
+          <br />
+          <input
+            type="password"
+            name="repassword"
+            placeholder="Re-enter Password"
             onChange={(e) => setRetypedPass(e.target.value)}
-            required 
+            required
           />
-          <br/>
+          <br />
           <input type="submit" value="Sign Up" />
         </form>
         {/* Use Link instead of anchor tag for navigation */}
-        <p>Already have an account? <Link to="/">Sign In</Link></p>
+        <p>
+          Already have an account? <Link to="/">Sign In</Link>
+        </p>
       </div>
     </div>
   );
