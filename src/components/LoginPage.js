@@ -13,7 +13,8 @@ function LoginPage() {
     event.preventDefault(); // Prevent default form submission behavior
 
     if (email === "test@gmail.com" && password === "pass123!@#") {
-      navigate("/budget"); // Replace '/dashboard' with the desired route
+      navigate("/Budget"); // Replace '/dashboard' with the desired route
+      
     } else {
       window.alert("Incorrect email or password. Please try again."); // Display alert
     }

@@ -15,7 +15,7 @@ function Navigate() {
                     <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                                <NavLink exact to="/Budget" className="nav-link">Budget Management</NavLink>
+                                <NavLink exact to="/BudGet" className="nav-link">Budget Management</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/ExpenseTracking" className="nav-link">Expense tracking</NavLink>
