@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = (event) => {
@@ -36,14 +37,21 @@ function LoginPage() {
             required
           />
           <br />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+          <input 
+            type={showPassword ? "text" : "password"} // Toggle password visibility
+            name="password" 
+            placeholder="Password" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
           />
+          <input 
+            type="checkbox" 
+            id="showPassword" 
+            checked={showPassword} 
+            onChange={() => setShowPassword(!showPassword)} // Toggle showPassword state
+          />
+          <label htmlFor="showPassword">Show Password</label>
           <br />
           <input type="submit" value="Log In" />
         </form>

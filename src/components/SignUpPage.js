@@ -8,6 +8,7 @@ function SignUpPage() {
   const [password, setPassword] = useState("");
   const [retypedPass, setRetypedPass] = useState("");
   const [userName, setUserName] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate(); 
 
   const handleSubmit = (event) => {
@@ -45,21 +46,29 @@ function SignUpPage() {
             required
           />
           <br />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
+          <input 
+            type={showPassword ? "text" : "password"} // Toggle password visibility
+            name="password" 
+            placeholder="Password" 
             onChange={(e) => setPassword(e.target.value)}
-            required
+            required 
           />
-          <br />
-          <input
-            type="password"
-            name="repassword"
-            placeholder="Re-enter Password"
+          <br/>
+          <input 
+            type={showPassword ? "text" : "password"} // Toggle password visibility
+            name="repassword" 
+            placeholder="Re-enter Password" 
             onChange={(e) => setRetypedPass(e.target.value)}
-            required
+            required 
           />
+          <br/>
+          <input 
+            type="checkbox" 
+            id="showPassword" 
+            checked={showPassword} 
+            onChange={() => setShowPassword(!showPassword)} // Toggle showPassword state
+          />
+          <label htmlFor="showPassword">Show Password</label>
           <br />
           <input type="submit" value="Sign Up" />
         </form>

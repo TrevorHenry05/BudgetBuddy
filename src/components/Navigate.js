@@ -33,7 +33,7 @@ function Navigate() {
                                     <NavLink to="/Settings" className="nav-link">Settings</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to="/LoginPage" className="nav-link">Log Out</NavLink>
+                                    <NavLink to="/" className="nav-link">Log Out</NavLink>
                                 </li>
                             </ul>
                         </span>
