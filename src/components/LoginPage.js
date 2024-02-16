@@ -12,7 +12,7 @@ function LoginPage() {
     event.preventDefault(); // Prevent default form submission behavior
 
     if (email === "test@gmail.com" && password === "pass123!@#") {
-      navigate("/dashboard"); // Replace '/dashboard' with the desired route
+      navigate("/budget"); // Replace '/dashboard' with the desired route
     } else {
       window.alert("Incorrect email or password. Please try again."); // Display alert
     }
@@ -21,7 +21,7 @@ function LoginPage() {
   return (
     <div className="container">
       <img src={logo} alt="Logo" />
-      <h1>Welcome to Our Website</h1>
+      <h1>Welcome to Budget Buddy</h1>
       <p>Please sign up or log in to access your account.</p>
       <div className="form-container">
         <form onSubmit={handleSubmit}>

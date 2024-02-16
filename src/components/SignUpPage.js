@@ -23,7 +23,7 @@ function SignUpPage() {
   return (
     <div className="container">
       <img src={logo} alt="Logo" />
-      <h1>Welcome to Our Website</h1>
+      <h1>Welcome to Budget Buddy</h1>
       <p>Please sign up or log in to access your account.</p>
       <div className="form-container">
         <form onSubmit={handleSubmit}>
