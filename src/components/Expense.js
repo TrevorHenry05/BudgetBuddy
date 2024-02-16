@@ -1,8 +1,13 @@
 import React from 'react'
-function Expense() {
+import Main from '../Layout/Main';
 
+function Expense() {
+    console.log('Expense');
     return (
     <>
+    <Main>
+        <p>Expense page</p>
+    </Main>
     </>
     );
 }

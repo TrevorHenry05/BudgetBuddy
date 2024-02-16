@@ -1,47 +1,46 @@
-import React from 'react'
-import { Link } from "react-router-dom";
+import React from 'react';
+import '../App.css'
+import { NavLink, Link } from "react-router-dom";
+
 function Navigate() {
     return (
         <>
-            <nav class="navbar navbar-expand-lg bg-body-primary">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Budget Budy</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
+            <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+                <div className="container-fluid">
+                    <Link to="/" className="navbar-brand">Budget Budy</Link>
+                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarText">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <ul className="nav justify-content-end">
-                                <li className="nav-item">
-                                    <a className="nav-link active" aria-current="page" href="/#">Budget Management</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="./src/components/Budget.js">Expense tracking</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/#">Group Collaboration</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="/#">Expense Category</a>
-                                </li>
-
-                            </ul>
+                    <div className="collapse navbar-collapse" id="navbarText">
+                        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                                <NavLink exact to="/" className="nav-link">Budget Management</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink to="/ExpenseTracking" className="nav-link">Expense tracking</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink to="/GroupColab" className="nav-link">Group Collaboration</NavLink>
+                            </li>
+                            <li className="nav-item">
+                                <NavLink to="/Expense" className="nav-link">Expense Category</NavLink>
+                            </li>
                         </ul>
-                        <span class="navbar-text">
+                        <span className="navbar-text">
                             <ul className="nav justify-content-end">
                                 <li className="nav-item">
-                                    <a className="nav-link" href="/#">Settings</a>
+                                    <NavLink to="/Settings" className="nav-link">Settings</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/" className="nav-link">Log Out</Link>
+                                    <NavLink to="/LoginPage" className="nav-link">Log Out</NavLink>
                                 </li>
                             </ul>
                         </span>
                     </div>
                 </div>
-            </nav >
-
+            </nav>
         </>
-    )
+    );
 }
+
 export default Navigate;
