@@ -9,13 +9,13 @@ function Navigate() {
             <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div className="container-fluid">
                     <Link to="/budget" className="navbar-brand">
-                        <img src={logo} alt="Budget Buddy Logo" style={{ maxWidth: '170px', maxHeight: '70px' }}/>
+                        <img src={logo} alt="Budget Buddy Logo" style={{ maxWidth: '150px', maxHeight: '50px' }}/>
                     </Link>
                 
                     <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
-                                <NavLink exact to="/Budget" className="nav-link">Budget Management</NavLink>
+                                <NavLink exact to="/BudDet" className="nav-link">Budget Management</NavLink>
                             </li>
                             <li className="nav-item">
                                 <NavLink to="/ExpenseTracking" className="nav-link">Expense tracking</NavLink>

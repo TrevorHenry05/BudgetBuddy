@@ -2,7 +2,6 @@
 import React from 'react';
 import Login from './components/LoginPage';
 import SignUp from './components/SignUpPage';
-import Navigate from './components/Navigate';
 import Budget from './components/Budget';
 import Expense from './components/Expense';
 import ExpenseTracking from './components/ExpenseTracking';
@@ -22,10 +21,6 @@ const router = createBrowserRouter([
   {
     path: "signUp",
     element: <SignUp />,
-  },
-  {
-    path: "dashboard",
-    element: <Navigate />,
   },
   {
     path: "budget",
