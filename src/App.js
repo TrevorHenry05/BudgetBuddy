@@ -6,6 +6,7 @@ import Budget from './components/Budget';
 import Expense from './components/Expense';
 import ExpenseTracking from './components/ExpenseTracking';
 import GroupColab from './components/GroupColab';
+import Settings from './components/Settings';
 import './App.css'
 
 import {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: "groupColab",
     element: <GroupColab />,
+  },
+  {
+    path: "settings",
+    element: <Settings />,
   },
 ])
 
