@@ -3,6 +3,7 @@ import "./Style.css"; // Import CSS file for styling
 import logo from "./img/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 
+
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

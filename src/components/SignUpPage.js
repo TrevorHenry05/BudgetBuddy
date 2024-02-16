@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from React Router
+import { Link, useNavigate } from "react-router-dom"; // Import Link from React Router
 import "./Style.css"; // Import CSS file for styling
 import logo from "./img/logo.jpg";
 
@@ -8,6 +8,7 @@ function SignUpPage() {
   const [password, setPassword] = useState("");
   const [retypedPass, setRetypedPass] = useState("");
   const [userName, setUserName] = useState("");
+  const navigate = useNavigate(); 
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
@@ -18,6 +19,7 @@ function SignUpPage() {
     console.log("UserName:", userName);
 
     // Connect with back end and route to dashboard
+    navigate("/budget");
   };
 
   return (

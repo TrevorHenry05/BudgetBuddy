@@ -4,7 +4,7 @@ function Settings() {
 
     return (
         <>
-
+            <p>settings page </p>
         </>
     );
 }
