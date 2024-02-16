@@ -2,33 +2,44 @@ import React from 'react'
 function Navigate() {
     return (
         <>
-            {/* Top Navigation Section */}
-            <nav className="navbar navbar-dark bg-primary mb-3 justify-content-start">
-                <div className="container">
-                    <a href="/#" className="navbar-brand">Budget Budy</a><br />
-                    <a href="" className="">about</a>
+            <nav class="navbar navbar-expand-lg bg-body-primary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Budget Budy</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarText">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <ul className="nav justify-content-end">
+                                <li className="nav-item">
+                                    <a className="nav-link active" aria-current="page" href="/#">Budget Management</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="./src/components/Budget.js">Expense tracking</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/#">Group Collaboration</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/#">Expense Category</a>
+                                </li>
+
+                            </ul>
+                        </ul>
+                        <span class="navbar-text">
+                            <ul className="nav justify-content-end">
+                                <li className="nav-item">
+                                    <a className="nav-link" href="/#">Settings</a>
+                                </li>
+                                <li className="nav-item">
+                                    <a className="nav-link"  href="/#">Log Out</a>
+                                </li>
+                            </ul>
+                        </span>
+                    </div>
                 </div>
-                <div className="navbar">
-                   
-                </div>
-            </nav>
-            <ul className="nav justify-content-end">
-                <li className="nav-item">
-                    <a className="nav-link active" aria-current="page" href="/#">Home</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/#">Budgets</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/#">Transactions</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link" href="/#">Overview</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link disabled" aria-disabled="true">Log Out</a>
-                </li>
-            </ul>
+            </nav >
+
         </>
     )
 }
