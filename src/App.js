@@ -24,10 +24,6 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: "dashboard",
-    element: <Navigate />,
-  },
-  {
     path: "budget",
     element: <Budget />,
   },
