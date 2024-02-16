@@ -5,8 +5,9 @@ import SignUp from './components/SignUpPage';
 import Navigate from './components/Navigate';
 import Budget from './components/Budget';
 import Expense from './components/Expense';
+import ExpenseTracking from './components/ExpenseTracking';
 import GroupColab from './components/GroupColab';
-import Navigate from './components/Navigate';
+import './App.css'
 
 import {
   createBrowserRouter,
@@ -26,6 +27,22 @@ const router = createBrowserRouter([
     path: "dashboard",
     element: <Navigate />,
   },
+  {
+    path: "budget",
+    element: <Budget />,
+  },
+  {
+    path: "expense",
+    element: <Expense />,
+  },
+  {
+    path: "expenseTracking",
+    element: <ExpenseTracking />,
+  },
+  {
+    path: "GroupColab",
+    element: <GroupColab />,
+  },
 ])
 
 function App() {
@@ -33,10 +50,6 @@ function App() {
 
     <>
       <RouterProvider router={router} />
-      <Navigate />
-      <Expense />
-      <Budget />
-      <GroupColab />
     </>
 
 

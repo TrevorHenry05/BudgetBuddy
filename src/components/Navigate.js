@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from "react-router-dom";
 function Navigate() {
     return (
         <>
@@ -32,7 +33,7 @@ function Navigate() {
                                     <a className="nav-link" href="/#">Settings</a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link"  href="/#">Log Out</a>
+                                    <Link to="/" className="nav-link">Log Out</Link>
                                 </li>
                             </ul>
                         </span>
