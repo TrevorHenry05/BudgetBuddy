@@ -1,13 +1,16 @@
 import React from 'react';
 import '../App.css'
 import { NavLink, Link } from "react-router-dom";
+import logo from './img/logo.jpg';
 
 function Navigate() {
     return (
         <>
             <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
                 <div className="container-fluid">
-                    <Link to="/" className="navbar-brand">Budget Budy</Link>
+                    <Link to="/budget" className="navbar-brand">
+                        <img src={logo} alt="Budget Buddy Logo" style={{ maxWidth: '170px', maxHeight: '70px' }}/>
+                    </Link>
                 
                     <div className="collapse navbar-collapse" id="navbarText">
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
