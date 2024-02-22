@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import Link from React Router
 import "./Style.css"; // Import CSS file for styling
 import logo from "./img/logo.jpg";
+import { API_URL } from "../constants";
 
 function SignUpPage() {
   const [email, setEmail] = useState("");
@@ -9,18 +10,55 @@ function SignUpPage() {
   const [retypedPass, setRetypedPass] = useState("");
   const [userName, setUserName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate(); 
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+    if (name == "email") {
+      setEmail(value);
+    } else if ("password") {
+      setPassword(value);
+    } else if ("username") {
+      setUserName(value);
+    } else if ("repassword") {
+      setRetypedPass(value);
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
 
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Re-password:", retypedPass);
-    console.log("UserName:", userName);
+    // console.log("Email:", email);
+    // console.log("Password:", password);
+    // console.log("Re-password:", retypedPass);
+    // console.log("UserName:", userName);
 
-    // Connect with back end and route to dashboard
-    navigate("/budget");
+    fetch(`${API_URL}/api/auth/register`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          navigate("/");
+        } else {
+          navigate("/budget");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("An error occurred. Please try again.");
+      });
+
   };
 
   return (
@@ -34,7 +72,7 @@ function SignUpPage() {
             type="email"
             name="email"
             placeholder="Email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleChange}
             required
           />
           <br />
@@ -42,7 +80,7 @@ function SignUpPage() {
             type="text"
             name="username"
             placeholder="Username"
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={handleChange}
             required
           />
           <br />
@@ -50,7 +88,7 @@ function SignUpPage() {
             type={showPassword ? "text" : "password"} // Toggle password visibility
             name="password" 
             placeholder="Password" 
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handleChange}
             required 
           />
           <br/>
@@ -58,7 +96,7 @@ function SignUpPage() {
             type={showPassword ? "text" : "password"} // Toggle password visibility
             name="repassword" 
             placeholder="Re-enter Password" 
-            onChange={(e) => setRetypedPass(e.target.value)}
+            onChange={handleChange}
             required 
           />
           <br/>

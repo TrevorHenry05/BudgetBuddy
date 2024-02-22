@@ -36,6 +36,7 @@ input[type="submit"] {
     border: 1px solid #ccc;
     border-radius: 3px;
     box-sizing: border-box;
+    user-select: auto;
 }
 input[type="submit"] {
     background-color: #007bff;
