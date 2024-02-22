@@ -3,7 +3,7 @@ import '../App.css'
 import { NavLink, Link } from "react-router-dom";
 import logo from './img/logo.jpg';
 
-function Navigate() {
+function Navigate({ onLogout }) {
     return (
         <>
             <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
@@ -33,7 +33,7 @@ function Navigate() {
                                     <NavLink to="/Settings" className="nav-link">Settings</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to="/" className="nav-link">Log Out</NavLink>
+                                    <NavLink to="/" className="nav-link" onClick={onLogout}>Log Out</NavLink>
                                 </li>
                             </ul>
                         </span>

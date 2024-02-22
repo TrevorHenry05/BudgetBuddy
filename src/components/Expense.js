@@ -1,11 +1,11 @@
 import React from 'react'
 import Main from '../Layout/Main';
 
-function Expense() {
+function Expense({onLogout}) {
     console.log('Expense');
     return (
     <>
-    <Main>
+    <Main onLogout={onLogout}>
         <p>Expense page</p>
     </Main>
     </>

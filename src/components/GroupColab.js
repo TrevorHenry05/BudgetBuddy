@@ -1,10 +1,11 @@
 import React from 'react';
 import Main from '../Layout/Main';
-function GroupColab() {
+
+function GroupColab({onLogout}) {
     console.log('Goup')
     return (
         <>
-<Main>
+    <Main onLogout={onLogout}>
         <p>Gro page</p>
     </Main>
         </>

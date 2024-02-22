@@ -85,32 +85,33 @@ function App() {
           />
           <Route 
             path="/budget"
-            element={
-              <Budget/>
+            element={ isAuthenticated ?
+              <Expense onLogout={handleLogout}/> :
+              <Budget onLogout={handleLogout}/>
             }
           />
           <Route 
             path="/expense"
             element={
-              <Expense/>
+              <Expense onLogout={handleLogout}/>
             }
           />
           <Route 
             path="/expenseTracking"
             element={
-              <ExpenseTracking/>
+              <ExpenseTracking onLogout={handleLogout}/>
             }
           />
           <Route 
             path="/groupColab"
             element={
-              <GroupColab/>
+              <GroupColab onLogout={handleLogout}/>
             }
           />
           <Route 
             path="/settings"
             element={
-              <Settings/>
+              <Settings onLogout={handleLogout}/>
             }
           />
         </Routes>

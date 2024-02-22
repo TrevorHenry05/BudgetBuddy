@@ -49,9 +49,9 @@ function SignUpPage() {
         console.log(data);
         if (data.token) {
           localStorage.setItem("token", data.token);
-          navigate("/");
-        } else {
           navigate("/budget");
+        } else {
+          navigate("/");
         }
       })
       .catch((error) => {

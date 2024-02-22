@@ -1,12 +1,12 @@
 import React from 'react';
 import Main from '../Layout/Main';
 
-function Budget() {
+function Budget({ onLogout }) {
 
-    console.log('Budger');
+    //console.log('Budger');
     return (
         <>
-         <Main>
+         <Main onLogout={onLogout}>
             <p>Budget page</p>
         </Main>
         </>

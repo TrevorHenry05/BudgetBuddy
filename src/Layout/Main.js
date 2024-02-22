@@ -3,13 +3,13 @@ import '../App.css'
 import Navigate from '../components/Navigate';
 
 
-function Main({ children }) {
+function Main({ children, onLogout }) {
 
 
     return (
         <>
             <div>
-                <Navigate />
+                <Navigate onLogout={onLogout}/>
                 <div>{children}</div>
             </div>
 

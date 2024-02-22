@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Main from '../Layout/Main';
 
-function SettingsPage() {
+function SettingsPage({onLogout}) {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -15,7 +15,7 @@ function SettingsPage() {
   };
 
   return (
-    <Main>
+    <Main onLogout={onLogout}>
         <div className="container">
         <h1>Settings</h1>
         <form onSubmit={handleSubmit}>
