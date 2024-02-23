@@ -66,6 +66,7 @@ function App() {
     setIsAuthenticated(false);
   };
 
+  console.log(isAuthenticated);
 
   return (
     <>
