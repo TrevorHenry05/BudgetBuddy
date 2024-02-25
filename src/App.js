@@ -1,13 +1,12 @@
-
-import React, { useState, useEffect } from 'react';
-import Login from './components/LoginPage';
-import SignUp from './components/SignUpPage';
-import Budget from './components/Budget';
-import Expense from './components/Expense';
-import ExpenseTracking from './components/ExpenseTracking';
-import GroupColab from './components/GroupColab';
-import Settings from './components/Settings';
-import './App.css'
+import React, { useState, useEffect } from "react";
+import Login from "./components/LoginPage";
+import SignUp from "./components/SignUpPage";
+import Budget from "./components/Budget";
+import Expense from "./components/Expense";
+import ExpenseTracking from "./components/ExpenseTracking";
+import GroupColab from "./components/GroupColab";
+import Settings from "./components/Settings";
+import "./App.css";
 import {
   BrowserRouter as Router,
   Routes,
@@ -48,6 +47,7 @@ import {
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // use this in the navbar to dynamically render the admin dashboard link
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -56,14 +56,16 @@ function App() {
     }
   }, []);
 
-  const handleLogin = (token) => {
+  const handleLogin = (token, userIsAdmin) => {
     localStorage.setItem("token", token);
     setIsAuthenticated(true);
+    setIsAdmin(userIsAdmin);
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setIsAuthenticated(false);
+    setIsAdmin(false);
   };
 
   console.log(isAuthenticated);
@@ -72,55 +74,37 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route 
-            path="/"
-            element={
-              <Login onLogin={handleLogin} />
-            }
-          />
-          <Route 
-            path="/signUp"
-            element={
-              <SignUp/>
-            }
-          />
-          <Route 
+          <Route path="/" element={<Login onLogin={handleLogin} />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route
             path="/budget"
-            element={ isAuthenticated ?
-              <Expense onLogout={handleLogout}/> :
-              <Budget onLogout={handleLogout}/>
+            element={
+              isAuthenticated ? (
+                <Expense onLogout={handleLogout} />
+              ) : (
+                <Budget onLogout={handleLogout} />
+              )
             }
           />
-          <Route 
+          <Route
             path="/expense"
-            element={
-              <Expense onLogout={handleLogout}/>
-            }
+            element={<Expense onLogout={handleLogout} />}
           />
-          <Route 
+          <Route
             path="/expenseTracking"
-            element={
-              <ExpenseTracking onLogout={handleLogout}/>
-            }
+            element={<ExpenseTracking onLogout={handleLogout} />}
           />
-          <Route 
+          <Route
             path="/groupColab"
-            element={
-              <GroupColab onLogout={handleLogout}/>
-            }
+            element={<GroupColab onLogout={handleLogout} />}
           />
-          <Route 
+          <Route
             path="/settings"
-            element={
-              <Settings onLogout={handleLogout}/>
-            }
+            element={<Settings onLogout={handleLogout} />}
           />
         </Routes>
       </Router>
     </>
-
-
-
   );
 }
 

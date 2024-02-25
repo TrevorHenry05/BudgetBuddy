@@ -4,8 +4,7 @@ import logo from "./img/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../constants";
 
-
-function LoginPage({onLogin}) {
+function LoginPage({ onLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -36,7 +35,7 @@ function LoginPage({onLogin}) {
       .then((response) => response.json())
       .then((data) => {
         if (data.token) {
-          onLogin(data.token);
+          onLogin(data.token, data.isAdmin);
           navigate("/Budget");
         } else {
           console.error("Login failed:", data.message);
@@ -49,7 +48,7 @@ function LoginPage({onLogin}) {
 
     // if (email === "test@gmail.com" && password === "pass123!@#") {
     //   navigate("/Budget"); // Replace '/dashboard' with the desired route
-      
+
     // } else {
     //   window.alert("Incorrect email or password. Please try again."); // Display alert
     // }
@@ -71,18 +70,18 @@ function LoginPage({onLogin}) {
             required
           />
           <br />
-          <input 
+          <input
             type={showPassword ? "text" : "password"} // Toggle password visibility
-            name="password" 
-            placeholder="Password" 
-            value={password} 
-            onChange={handleChange} 
-            required 
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={handleChange}
+            required
           />
-          <input 
-            type="checkbox" 
-            id="showPassword" 
-            checked={showPassword} 
+          <input
+            type="checkbox"
+            id="showPassword"
+            checked={showPassword}
             onChange={() => setShowPassword(!showPassword)} // Toggle showPassword state
           />
           <label htmlFor="showPassword">Show Password</label>
