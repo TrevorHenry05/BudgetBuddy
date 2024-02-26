@@ -49,7 +49,6 @@ function SettingsPage() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         alert("Settings updated successfully");
       })
       .catch((error) => console.error("Error:", error));

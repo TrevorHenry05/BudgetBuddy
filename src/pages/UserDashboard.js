@@ -29,7 +29,6 @@ const UserDashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       setBudgetUsage(response.data.percentOfBudgetsUsed);
       setExpensesPerMonthUrl(response.data.expensesPerMonth.chartUrl);
       setExpensesPerCategoryUrl(response.data.expensesPerCategory.chartUrl);

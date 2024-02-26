@@ -41,8 +41,6 @@ function App() {
     setIsAdmin(false);
   };
 
-  console.log(isAuthenticated);
-
   return (
     <Router>
       <>
