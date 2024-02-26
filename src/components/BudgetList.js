@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const BudgetList = ({ budgets }) => {
+const BudgetList = ({ budgets, setShowModal, isGroup = false }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (budgetId) => {
@@ -9,7 +9,7 @@ const BudgetList = ({ budgets }) => {
   };
 
   const handleCreateBudget = () => {
-    console.log("Open budget creation form");
+    setShowModal(true);
   };
 
   return (
@@ -23,7 +23,7 @@ const BudgetList = ({ budgets }) => {
       }}
     >
       <div className="card-header d-flex justify-content-between align-items-center">
-        Your Budgets
+        Budgets
         <button className="btn btn-primary" onClick={handleCreateBudget}>
           Create Budget
         </button>
@@ -48,6 +48,7 @@ const BudgetList = ({ budgets }) => {
               <div>
                 End Date: {new Date(budget.endDate).toLocaleDateString()}
               </div>
+              {isGroup ? <div>User: {budget.user.username}</div> : null}
             </button>
           ))}
         </div>

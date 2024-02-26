@@ -6,6 +6,7 @@ import UserDashboard from "./pages/UserDashboard";
 import Expense from "./pages/Expense";
 import Budget from "./pages/Budget";
 import Group from "./pages/Group";
+import AdminDashboard from "./pages/AdminDashboard";
 import Settings from "./pages/Settings";
 import "./styles/bootstrap.css";
 import "./styles/Style.css";
@@ -69,6 +70,20 @@ function App() {
             <Route
               path="/groups/:groupId"
               element={isAuthenticated ? <Group /> : <Navigate to="/" />}
+            />
+            <Route
+              path="/admin"
+              element={
+                isAuthenticated ? (
+                  isAdmin ? (
+                    <AdminDashboard />
+                  ) : (
+                    <Navigate to="/dashboard" />
+                  )
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
             />
             <Route
               path="/settings"

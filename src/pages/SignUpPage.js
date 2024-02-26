@@ -31,7 +31,7 @@ function SignUpPage() {
         console.log(data);
         if (data.token) {
           localStorage.setItem("token", data.token);
-          navigate("/budget");
+          navigate("/dashboard");
         } else {
           navigate("/");
         }
@@ -43,57 +43,80 @@ function SignUpPage() {
   };
 
   return (
-    <div className="container">
-      <img src={logo} alt="Logo" />
-      <h1>Welcome to Budget Buddy</h1>
-      <p>Please sign up or log in to access your account.</p>
-      <div className="form-container">
-        <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type={showPassword ? "text" : "password"} // Toggle password visibility
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type={showPassword ? "text" : "password"} // Toggle password visibility
-            name="repassword"
-            placeholder="Re-enter Password"
-            onChange={handleChange}
-            required
-          />
-          <br />
-          <input
-            type="checkbox"
-            id="showPassword"
-            checked={showPassword}
-            onChange={() => setShowPassword(!showPassword)} // Toggle showPassword state
-          />
-          <label htmlFor="showPassword">Show Password</label>
-          <br />
-          <input type="submit" value="Sign Up" />
+    <div className="container mt-5">
+      <div className="text-center mb-4">
+        <img
+          src={logo}
+          alt="Logo"
+          className="mb-4"
+          style={{ maxWidth: "150px" }}
+        />
+        <h1>Welcome to Budget Buddy</h1>
+        <p>Please sign up or log in to access your account.</p>
+      </div>
+      <div className="form-container d-flex justify-content-center">
+        <form onSubmit={handleSubmit} className="w-50">
+          <div className="mb-3">
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              placeholder="Email"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type="text"
+              name="username"
+              className="form-control"
+              placeholder="Username"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              className="form-control"
+              placeholder="Password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="repassword"
+              className="form-control"
+              placeholder="Re-enter Password"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="mb-3 form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="showPassword"
+              checked={showPassword}
+              onChange={() => setShowPassword(!showPassword)}
+            />
+            <label className="form-check-label" htmlFor="showPassword">
+              Show Password
+            </label>
+          </div>
+          <div className="d-grid gap-2">
+            <button type="submit" className="btn btn-primary">
+              Sign Up
+            </button>
+          </div>
         </form>
-        <p>
-          Already have an account? <Link to="/">Sign In</Link>
-        </p>
+      </div>
+      <div className="text-center mt-3">
+        Already have an account? <Link to="/">Sign In</Link>
       </div>
     </div>
   );

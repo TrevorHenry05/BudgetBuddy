@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const ExpensesList = ({ expenses }) => {
+const ExpensesList = ({ expenses, isGroup = false }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (expenseId) => {
@@ -18,7 +18,7 @@ const ExpensesList = ({ expenses }) => {
         height: "356px",
       }}
     >
-      <div className="card-header text-center">Your Expenses</div>
+      <div className="card-header text-center">Expenses</div>
       <div
         className="card-body"
         style={{ maxHeight: "300px", overflowY: "auto" }}
@@ -36,6 +36,7 @@ const ExpensesList = ({ expenses }) => {
                 <div>
                   {expense.categoryName} - ${expense.amount}
                 </div>
+                {isGroup ? <div>User: {expense.user.username}</div> : null}
               </div>
             </button>
           ))}

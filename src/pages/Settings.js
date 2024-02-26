@@ -56,43 +56,52 @@ function SettingsPage() {
   };
 
   return (
-    <>
-      <div className="container">
-        <h1>Settings</h1>
-        <form onSubmit={handleSubmit}>
-          <label>
+    <div className="container mt-5">
+      <h1 className="mb-4">Settings</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
             Email:
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
           </label>
-          <br />
-          <label>
+          <input
+            type="email"
+            className="form-control"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
             Username:
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
           </label>
-          <br />
-          <label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
             New Password:
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
           </label>
-          <br />
-          <input type="submit" value="Update Settings" />
-        </form>
-      </div>
-    </>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Update Settings
+        </button>
+      </form>
+    </div>
   );
 }
 

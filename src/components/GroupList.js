@@ -1,17 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const GroupList = ({ groups }) => {
+const GroupList = ({ groups, setShowModal }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (groupId) => {
     navigate(`/groups/${groupId}`);
   };
 
-  // Placeholder function for opening the create group form
   const handleCreateGroup = () => {
-    // Placeholder for opening the modal or navigating to the group creation form
-    console.log("Open group creation form");
+    setShowModal(true);
   };
 
   return (
@@ -25,7 +23,7 @@ const GroupList = ({ groups }) => {
       }}
     >
       <div className="card-header d-flex justify-content-between align-items-center">
-        Your Groups
+        Groups
         <button className="btn btn-primary" onClick={handleCreateGroup}>
           Create Group
         </button>

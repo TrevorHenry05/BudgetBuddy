@@ -5,6 +5,8 @@ import BudgetChartCard from "../components/BudgetChartCard";
 import ExpensesList from "../components/ExpenseList";
 import GroupList from "../components/GroupList";
 import BudgetList from "../components/BudgetList";
+import GroupCreationModal from "../components/GroupCreationModal";
+import BudgetCreationModal from "../components/BudgetCreationModal";
 import { API_URL } from "../constants";
 
 const UserDashboard = () => {
@@ -14,6 +16,8 @@ const UserDashboard = () => {
   const [expenses, setExpenses] = useState([]);
   const [budgets, setBudgets] = useState([]);
   const [groups, setGroups] = useState([]);
+  const [showGroupModal, setShowGroupModal] = useState(false);
+  const [showBudgetModal, setShowBudgetModal] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -25,6 +29,7 @@ const UserDashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response.data);
       setBudgetUsage(response.data.percentOfBudgetsUsed);
       setExpensesPerMonthUrl(response.data.expensesPerMonth.chartUrl);
       setExpensesPerCategoryUrl(response.data.expensesPerCategory.chartUrl);
@@ -63,11 +68,11 @@ const UserDashboard = () => {
       >
         <h2 className="text-center mb-3">Budget and Expense Analysis</h2>
         <div className="row g-3">
-          {budgetUsage.length > 0 && (
+          {
             <div className="col-md-4">
               <BudgetSlider charts={budgetUsage} />
             </div>
-          )}
+          }
           {expensesPerMonthUrl && (
             <div className="col-md-4">
               <BudgetChartCard
@@ -92,15 +97,23 @@ const UserDashboard = () => {
         style={{ backgroundColor: "#e9ecef", borderRadius: "0.25rem" }}
       >
         <div className="col-md-4">
-          <GroupList groups={groups} />
+          <GroupList groups={groups} setShowModal={setShowGroupModal} />
         </div>
         <div className="col-md-4">
-          <BudgetList budgets={budgets} />
+          <BudgetList budgets={budgets} setShowModal={setShowBudgetModal} />
         </div>
         <div className="col-md-4">
           <ExpensesList expenses={expenses} />
         </div>
       </section>
+      <GroupCreationModal
+        show={showGroupModal}
+        handleClose={() => setShowGroupModal(false)}
+      />
+      <BudgetCreationModal
+        show={showBudgetModal}
+        handleClose={() => setShowBudgetModal(false)}
+      />
     </div>
   );
 };
