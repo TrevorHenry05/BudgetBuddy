@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./Style.css"; // Import CSS file for styling
-import logo from "./img/logo.jpg";
+import "../styles/Style.css"; // Import CSS file for styling
+import logo from "../components/img/logo.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../constants";
 
@@ -36,7 +36,7 @@ function LoginPage({ onLogin }) {
       .then((data) => {
         if (data.token) {
           onLogin(data.token, data.isAdmin);
-          navigate("/Budget");
+          navigate("/dashboard");
         } else {
           console.error("Login failed:", data.message);
           alert("Incorrect email or password. Please try again.");
