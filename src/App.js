@@ -48,7 +48,7 @@ function App() {
         {isAuthenticated && (
           <NavBar onLogout={handleLogout} isAdmin={isAdmin} />
         )}
-        <div style={{ paddingTop: "60px" }}>
+        <div style={{ paddingTop: "80px" }}>
           <Routes>
             <Route path="/" element={<Login onLogin={handleLogin} />} />
             <Route path="/signUp" element={<SignUp />} />
