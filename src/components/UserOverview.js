@@ -16,7 +16,7 @@ const UserOverview = ({ users }) => {
         <div className="list-group">
           {users.map((user) => (
             <button
-              key={user.id}
+              key={user._id}
               type="button"
               className="list-group-item list-group-item-action"
               onClick={() => {}}

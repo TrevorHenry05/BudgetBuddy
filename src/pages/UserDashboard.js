@@ -63,7 +63,12 @@ const UserDashboard = () => {
 
       <section
         className="mb-5 p-3"
-        style={{ backgroundColor: "#e9ecef", borderRadius: "0.25rem" }}
+        style={{
+          backgroundColor: "white",
+          borderRadius: "0.25rem",
+          width: "90%",
+          margin: "auto",
+        }}
       >
         <h2 className="text-center mb-3">Budget and Expense Analysis</h2>
         <div className="row g-3">
@@ -93,7 +98,12 @@ const UserDashboard = () => {
 
       <section
         className="row p-3"
-        style={{ backgroundColor: "#e9ecef", borderRadius: "0.25rem" }}
+        style={{
+          backgroundColor: "white",
+          borderRadius: "0.25rem",
+          width: "90%",
+          margin: "auto",
+        }}
       >
         <div className="col-md-4">
           <GroupList groups={groups} setShowModal={setShowGroupModal} />

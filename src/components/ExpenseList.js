@@ -1,11 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const ExpensesList = ({ expenses, isGroup = false }) => {
+const ExpensesList = ({
+  expenses,
+  setShowModal = null,
+  displayCreate = false,
+  displayUser = false,
+}) => {
   const navigate = useNavigate();
 
   const handleNavigate = (expenseId) => {
     navigate(`/expenses/${expenseId}`);
+  };
+
+  const handleCreateExpense = () => {
+    setShowModal(true);
   };
 
   return (
@@ -18,7 +27,14 @@ const ExpensesList = ({ expenses, isGroup = false }) => {
         height: "356px",
       }}
     >
-      <div className="card-header text-center">Expenses</div>
+      <div className="card-header d-flex justify-content-between align-items-center">
+        Expenses
+        {displayCreate ? (
+          <button className="btn btn-primary" onClick={handleCreateExpense}>
+            Create Expense
+          </button>
+        ) : null}
+      </div>
       <div
         className="card-body"
         style={{ maxHeight: "300px", overflowY: "auto" }}
@@ -36,7 +52,7 @@ const ExpensesList = ({ expenses, isGroup = false }) => {
                 <div>
                   {expense.categoryName} - ${expense.amount}
                 </div>
-                {isGroup ? <div>User: {expense.user.username}</div> : null}
+                {displayUser ? <div>User: {expense.user.username}</div> : null}
               </div>
             </button>
           ))}

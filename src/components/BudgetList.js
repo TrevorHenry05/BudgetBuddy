@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const BudgetList = ({ budgets, setShowModal, isGroup = false }) => {
+const BudgetList = ({ budgets, setShowModal, displayUser = false }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (budgetId) => {
@@ -48,7 +48,7 @@ const BudgetList = ({ budgets, setShowModal, isGroup = false }) => {
               <div>
                 End Date: {new Date(budget.endDate).toLocaleDateString()}
               </div>
-              {isGroup ? <div>User: {budget.user.username}</div> : null}
+              {displayUser ? <div>User: {budget.user.username}</div> : null}
             </button>
           ))}
         </div>

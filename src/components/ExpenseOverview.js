@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 const ExpenseOverview = ({ expenses }) => {
   const navigate = useNavigate();
 
-  console.log(expenses);
-
   return (
     <div
       className="card"
@@ -21,10 +19,10 @@ const ExpenseOverview = ({ expenses }) => {
         <div className="list-group">
           {expenses.map((expense) => (
             <button
-              key={expense.id}
+              key={expense._id}
               type="button"
               className="list-group-item list-group-item-action"
-              onClick={() => navigate(`/expenses/${expense.id}`)}
+              onClick={() => navigate(`/expenses/${expense._id}`)}
             >
               Description: {expense.description} <br />
               Amount: ${expense.amount} <br />

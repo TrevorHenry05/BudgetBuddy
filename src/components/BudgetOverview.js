@@ -24,10 +24,10 @@ const BudgetOverview = ({ budgets }) => {
         <div className="list-group">
           {budgets.map((budget) => (
             <button
-              key={budget.id}
+              key={budget._id}
               type="button"
               className="list-group-item list-group-item-action"
-              onClick={() => navigate(`/budgets/${budget.id}`)}
+              onClick={() => navigate(`/budgets/${budget._id}`)}
             >
               Purpose: {budget.purpose} <br />
               Start Date: {formatDate(budget.startDate)} <br />
