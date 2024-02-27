@@ -39,30 +39,34 @@ const ExpensesList = ({
         className="card-body"
         style={{ maxHeight: "300px", overflowY: "auto" }}
       >
-        <div className="list-group">
-          {expenses.map((expense) => (
-            <button
-              key={expense._id}
-              type="button"
-              className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-              onClick={() => handleNavigate(expense._id)}
-            >
-              <div>
-                <div className="fw-bold">{expense.description}</div>
+        {expenses.length === 0 ? (
+          <div>No Expenses Available</div>
+        ) : (
+          <div className="list-group">
+            {expenses.map((expense) => (
+              <button
+                key={expense._id}
+                type="button"
+                className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                onClick={() => handleNavigate(expense._id)}
+              >
                 <div>
-                  {expense.categoryName} - ${expense.amount}
+                  <div className="fw-bold">{expense.description}</div>
+                  <div>
+                    {expense.categoryName} - ${expense.amount}
+                  </div>
+                  {displayUser ? (
+                    expense.user ? (
+                      <div>User: {expense.user.username}</div>
+                    ) : (
+                      <div>No User </div>
+                    )
+                  ) : null}
                 </div>
-                {displayUser ? (
-                  expense.user ? (
-                    <div>User: {expense.user.username}</div>
-                  ) : (
-                    <div>No User </div>
-                  )
-                ) : null}
-              </div>
-            </button>
-          ))}
-        </div>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
