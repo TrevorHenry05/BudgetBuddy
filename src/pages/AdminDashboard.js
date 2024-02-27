@@ -98,7 +98,7 @@ function AdminDashboard() {
             placeholder="Search Users"
             value={userSearch}
             onChange={(e) => setUserSearch(e.target.value)}
-            style={{ width: "80%", margin: "auto" }}
+            style={{ width: "80%", minWidth: "300px", margin: "auto" }}
           />
           <UserOverview users={filteredUsers} />
         </div>
@@ -109,7 +109,7 @@ function AdminDashboard() {
             placeholder="Search Groups"
             value={groupSearch}
             onChange={(e) => setGroupSearch(e.target.value)}
-            style={{ width: "80%", margin: "auto" }}
+            style={{ width: "80%", minWidth: "300px", margin: "auto" }}
           />
           <GroupOverview groups={filteredGroups} />
         </div>
@@ -120,7 +120,7 @@ function AdminDashboard() {
             placeholder="Search Budgets"
             value={budgetSearch}
             onChange={(e) => setBudgetSearch(e.target.value)}
-            style={{ width: "80%", margin: "auto" }}
+            style={{ width: "80%", minWidth: "300px", margin: "auto" }}
           />
           <BudgetOverview budgets={filteredBudgets} />
         </div>
@@ -131,7 +131,7 @@ function AdminDashboard() {
             placeholder="Search Expenses"
             value={expenseSearch}
             onChange={(e) => setExpenseSearch(e.target.value)}
-            style={{ width: "80%", margin: "auto" }}
+            style={{ width: "80%", minWidth: "300px", margin: "auto" }}
           />
           <ExpenseOverview expenses={filteredExpenses} />
         </div>

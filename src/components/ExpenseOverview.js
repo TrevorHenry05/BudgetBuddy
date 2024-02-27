@@ -11,6 +11,7 @@ const ExpenseOverview = ({ expenses }) => {
       className="card"
       style={{
         width: "80%",
+        minWidth: "300px",
         margin: "auto",
         overflow: "hidden",
       }}

@@ -4,7 +4,12 @@ const UserOverview = ({ users }) => {
   return (
     <div
       className="card"
-      style={{ width: "80%", margin: "auto", overflow: "hidden" }}
+      style={{
+        width: "80%",
+        minWidth: "300px",
+        margin: "auto",
+        overflow: "hidden",
+      }}
     >
       <div className="card-header"></div>
       <div className="card-body" style={{ height: "300px", overflowY: "auto" }}>
