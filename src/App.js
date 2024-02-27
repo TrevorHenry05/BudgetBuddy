@@ -70,7 +70,7 @@ function App() {
               element={isAuthenticated ? <Group /> : <Navigate to="/" />}
             />
             <Route
-              path="/admin"
+              path="/admindashboard"
               element={
                 isAuthenticated ? (
                   isAdmin ? (
