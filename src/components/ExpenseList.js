@@ -52,7 +52,13 @@ const ExpensesList = ({
                 <div>
                   {expense.categoryName} - ${expense.amount}
                 </div>
-                {displayUser ? <div>User: {expense.user.username}</div> : null}
+                {displayUser ? (
+                  expense.user ? (
+                    <div>User: {expense.user.username}</div>
+                  ) : (
+                    <div>No User </div>
+                  )
+                ) : null}
               </div>
             </button>
           ))}

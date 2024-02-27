@@ -48,7 +48,13 @@ const BudgetList = ({ budgets, setShowModal, displayUser = false }) => {
               <div>
                 End Date: {new Date(budget.endDate).toLocaleDateString()}
               </div>
-              {displayUser ? <div>User: {budget.user.username}</div> : null}
+              {displayUser ? (
+                budget.user ? (
+                  <div>User: {budget.user.username}</div>
+                ) : (
+                  <div>No User </div>
+                )
+              ) : null}
             </button>
           ))}
         </div>
