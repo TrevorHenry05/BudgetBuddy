@@ -49,8 +49,22 @@ function App() {
         )}
         <div style={{ paddingTop: "80px" }}>
           <Routes>
-            <Route path="/" element={<Login onLogin={handleLogin} />} />
-            <Route path="/signUp" element={<SignUp />} />
+            <Route
+              path="/"
+              element={
+                !isAuthenticated ? (
+                  <Login onLogin={handleLogin} />
+                ) : (
+                  <Navigate to="/dashboard" />
+                )
+              }
+            />
+            <Route
+              path="/signUp"
+              element={
+                !isAuthenticated ? <SignUp /> : <Navigate to="/dashboard" />
+              }
+            />
             <Route
               path="/dashboard"
               element={
@@ -70,7 +84,7 @@ function App() {
               element={isAuthenticated ? <Group /> : <Navigate to="/" />}
             />
             <Route
-              path="/admin"
+              path="/admindashboard"
               element={
                 isAuthenticated ? (
                   isAdmin ? (

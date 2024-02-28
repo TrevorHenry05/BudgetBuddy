@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const BudgetList = ({ budgets, setShowModal, isGroup = false }) => {
+const BudgetList = ({ budgets, setShowModal, displayUser = false }) => {
   const navigate = useNavigate();
 
   const handleNavigate = (budgetId) => {
@@ -32,26 +32,36 @@ const BudgetList = ({ budgets, setShowModal, isGroup = false }) => {
         className="card-body"
         style={{ maxHeight: "300px", overflowY: "auto" }}
       >
-        <div className="list-group">
-          {budgets.map((budget) => (
-            <button
-              key={budget._id}
-              type="button"
-              className="list-group-item list-group-item-action"
-              onClick={() => handleNavigate(budget._id)}
-            >
-              <div className="fw-bold">{budget.purpose}</div>
-              <div>Total Budget: ${budget.totalBudget}</div>
-              <div>
-                Start Date: {new Date(budget.startDate).toLocaleDateString()}
-              </div>
-              <div>
-                End Date: {new Date(budget.endDate).toLocaleDateString()}
-              </div>
-              {isGroup ? <div>User: {budget.user.username}</div> : null}
-            </button>
-          ))}
-        </div>
+        {budgets.length === 0 ? (
+          <div>No Budgets Available</div>
+        ) : (
+          <div className="list-group">
+            {budgets.map((budget) => (
+              <button
+                key={budget._id}
+                type="button"
+                className="list-group-item list-group-item-action"
+                onClick={() => handleNavigate(budget._id)}
+              >
+                <div className="fw-bold">{budget.purpose}</div>
+                <div>Total Budget: ${budget.totalBudget}</div>
+                <div>
+                  Start Date: {new Date(budget.startDate).toLocaleDateString()}
+                </div>
+                <div>
+                  End Date: {new Date(budget.endDate).toLocaleDateString()}
+                </div>
+                {displayUser ? (
+                  budget.user ? (
+                    <div>User: {budget.user.username}</div>
+                  ) : (
+                    <div>No User </div>
+                  )
+                ) : null}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

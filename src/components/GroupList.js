@@ -32,18 +32,22 @@ const GroupList = ({ groups, setShowModal }) => {
         className="card-body"
         style={{ maxHeight: "300px", overflowY: "auto" }}
       >
-        <div className="list-group">
-          {groups.map((group) => (
-            <button
-              key={group._id}
-              type="button"
-              className="list-group-item list-group-item-action"
-              onClick={() => handleNavigate(group._id)}
-            >
-              {group.groupName}
-            </button>
-          ))}
-        </div>
+        {groups.length === 0 ? (
+          <div>No Groups Available</div>
+        ) : (
+          <div className="list-group">
+            {groups.map((group) => (
+              <button
+                key={group._id}
+                type="button"
+                className="list-group-item list-group-item-action"
+                onClick={() => handleNavigate(group._id)}
+              >
+                {group.groupName}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
