@@ -52,7 +52,7 @@ function App() {
             <Route
               path="/"
               element={
-                isAuthenticated ? (
+                !isAuthenticated ? (
                   <Login onLogin={handleLogin} />
                 ) : (
                   <Navigate to="/dashboard" />
@@ -62,7 +62,7 @@ function App() {
             <Route
               path="/signUp"
               element={
-                isAuthenticated ? <SignUp /> : <Navigate to="/dashboard" />
+                !isAuthenticated ? <SignUp /> : <Navigate to="/dashboard" />
               }
             />
             <Route
