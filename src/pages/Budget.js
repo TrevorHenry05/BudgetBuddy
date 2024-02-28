@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../constants";
 
@@ -149,19 +149,25 @@ function Budget() {
         </section>
 
         <section>
+          <h2>Expenses</h2>
           <div>
-            <h2>Expenses</h2>
+            <button className="btn btn-success" >Create New Expense</button>
+          </div>
+          <div>
             {/* Render each expense item */}
             {expenses.map((expense, index) => (
               <div key={index} className="list-group">
                 <p className="fw-bold">Description: {expense.description}</p>
                 <p>Amount: ${expense.amount}</p>
                 <p>Date: {expense.date.toLocaleString()}</p>
+                {/* <p>Expense ID: {expense._id}</p> */}
+                <div className="d-flex">
+                  <Link className="btn btn-primary" to={`/expenses/${expense._id}`}>View</Link>
+                  <button className="btn btn-warning">Delete</button>
+                </div>
                 {/* Add more details as needed */}
               </div>
             ))}
-            {/* Button to create new expenses */}
-            <button className="btn btn-success">Create New Expense</button>
           </div>
         </section>
       </div>
