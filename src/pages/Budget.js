@@ -126,10 +126,24 @@ function Budget() {
   return (
     <>
       <div className="container-fluid my-4 p-3">
-        <h1 className="text-center mb-4">Budget Details</h1>
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <Link className="btn btn-outline-secondary" to="/dashboard">
+            <i className="bi bi-arrow-left"></i>
+          </Link>
+          <h1 className="mx-auto">Budget Details</h1>
+          <div className="btn btn-outline-secondary invisible">
+            <i className="bi bi-arrow-right"></i> Dashboard
+          </div>
+        </div>
+
         <section
           className="mb-5 p-3"
-          style={{ backgroundColor: "#e9ecef", borderRadius: "0.25rem" }}
+          style={{
+            backgroundColor: "#e9ecef",
+            borderRadius: "0.25rem",
+            width: "80%",
+            margin: "auto",
+          }}
         >
           <div className="d-flex flex-row">
             <div className="p-2">
@@ -180,26 +194,45 @@ function Budget() {
           </div>
         </section>
 
-        <section>
-          <h2>Expenses</h2>
-          <div>
+        <section
+          style={{
+            backgroundColor: "#e9ecef",
+            borderRadius: "0.25rem",
+            width: "80%",
+            margin: "auto",
+            padding: "10px",
+            justifyContent: "space-between",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <h2>Expenses</h2>
             <button className="btn btn-success" onClick={handleAddExpense}>
               Create New Expense
             </button>
           </div>
+
           <ExpenseCreationModal
             show={showExpenseModal}
             handleClose={() => setShowExpenseModal(false)}
             budgetId={budgetId}
           />
-          <div>
+          <div style={{ overflowY: "auto", height: "500px" }}>
             {/* Render each expense item */}
             {expenses.map((expense, index) => (
-              <div key={index} className="list-group">
+              <div
+                key={index}
+                className="list-group"
+                style={{ padding: "10px" }}
+              >
                 <p className="fw-bold">Description: {expense.description}</p>
                 <p>Amount: ${expense.amount}</p>
                 <p>Date: {expense.date.toLocaleString()}</p>
-                {/* <p>Expense ID: {expense._id}</p> */}
                 <div className="d-flex">
                   <Link
                     className="btn btn-primary"
@@ -214,16 +247,10 @@ function Budget() {
                     Delete
                   </button>
                 </div>
-                {/* Add more details as needed */}
               </div>
             ))}
           </div>
         </section>
-        <div className="text-center pt-3">
-          <Link className="btn btn-primary" to="/">
-            Back to Dashboard
-          </Link>
-        </div>
       </div>
     </>
   );
