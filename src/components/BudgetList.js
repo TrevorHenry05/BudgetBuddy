@@ -46,10 +46,12 @@ const BudgetList = ({ budgets, setShowModal, displayUser = false }) => {
                 <div className="fw-bold">{budget.purpose}</div>
                 <div>Total Budget: ${budget.totalBudget}</div>
                 <div>
-                  Start Date: {new Date(budget.startDate).toLocaleDateString()}
+                  {/* Start Date: {new Date(budget.startDate).toLocaleDateString()} */}
+                  Start Date: {budget.startDate}
                 </div>
                 <div>
-                  End Date: {new Date(budget.endDate).toLocaleDateString()}
+                  {/* End Date: {new Date(budget.endDate).toLocaleDateString()} */}
+                  End Date: {budget.endDate}
                 </div>
                 {displayUser ? (
                   budget.user ? (
