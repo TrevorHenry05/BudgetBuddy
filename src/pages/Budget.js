@@ -5,7 +5,6 @@ import { API_URL } from "../constants";
 import ExpenseCreationModal from "../components/ExpenseCreationModal";
 
 function Budget() {
-
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { budgetId } = useParams();
@@ -17,7 +16,7 @@ function Budget() {
     endDate: "",
     group: "",
     userId: "",
-    budgetType: ""
+    budgetType: "",
   });
   const [expenses, setExpenses] = useState([]);
 
@@ -42,9 +41,9 @@ function Budget() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setBudget(prevBudget => ({
+    setBudget((prevBudget) => ({
       ...prevBudget,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -55,18 +54,20 @@ function Budget() {
     const formattedEndDate = new Date(budget.endDate);
 
     try {
-      await axios.put(`${API_URL}/api/budgets/${budgetId}`,
+      await axios.put(
+        `${API_URL}/api/budgets/${budgetId}`,
         {
-          "totalBudget": budget.totalBudget,
-          "purpose": budget.purpose,
-          "startDate": formattedStartDate,
-          "endDate": formattedEndDate
+          totalBudget: budget.totalBudget,
+          purpose: budget.purpose,
+          startDate: formattedStartDate,
+          endDate: formattedEndDate,
         },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-          }
-        });
+          },
+        }
+      );
       alert("Budget details updated!");
       //console.log(response);
     } catch (err) {
@@ -79,17 +80,20 @@ function Budget() {
   };
 
   const handleDeleteExpense = async (expenseId) => {
-    const deleteConfirmed = window.confirm('Are you sure about the deletion of this record permanently from the database?');
+    const deleteConfirmed = window.confirm(
+      "Are you sure about the deletion of this record permanently from the database?"
+    );
     if (deleteConfirmed) {
       try {
-        await axios.delete(`${API_URL}/api/expenses/${expenseId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          });
+        await axios.delete(`${API_URL}/api/expenses/${expenseId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         alert("Expense successfully deleted!");
-        setExpenses(prevExpenses => prevExpenses.filter(expense => expense._id !== expenseId));
+        setExpenses((prevExpenses) =>
+          prevExpenses.filter((expense) => expense._id !== expenseId)
+        );
       } catch (err) {
         console.log("Erroe: " + err);
       }
@@ -97,20 +101,21 @@ function Budget() {
   };
 
   const handleDelete = async (e) => {
-    const deleteConfirmed = window.confirm('Are you sure about the deletion of this record permanently from the database?');
+    const deleteConfirmed = window.confirm(
+      "Are you sure about the deletion of this record permanently from the database?"
+    );
     if (deleteConfirmed) {
       try {
-        await axios.delete(`${API_URL}/api/budgets/${budgetId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            }
-          });
+        await axios.delete(`${API_URL}/api/budgets/${budgetId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         alert("Budget successfully deleted!");
         if (budget.group == null) {
           navigate(`/dashboard`);
         } else {
-          navigate(`/group/${budget.group}`)
+          navigate(`/groups/${budget.group._id}`);
         }
       } catch (err) {
         console.log("Erroe: " + err);
@@ -124,7 +129,8 @@ function Budget() {
         <h1 className="text-center mb-4">Budget Details</h1>
         <section
           className="mb-5 p-3"
-          style={{ backgroundColor: "#e9ecef", borderRadius: "0.25rem" }}>
+          style={{ backgroundColor: "#e9ecef", borderRadius: "0.25rem" }}
+        >
           <div className="d-flex flex-row">
             <div className="p-2">
               Purpose:{" "}
@@ -154,7 +160,7 @@ function Budget() {
               />
             </div>
             <div className="p-2">
-              End Date: {" "}
+              End Date:{" "}
               <input
                 type="date"
                 name="endDate"
@@ -164,16 +170,22 @@ function Budget() {
             </div>
           </div>
           <div>
-            <button className="btn btn-success" onClick={handleUpdate}>Update</button>
-            <span style={{ marginRight: '10px' }}></span>
-            <button className="btn btn-warning" onClick={handleDelete}>Delete</button>
+            <button className="btn btn-success" onClick={handleUpdate}>
+              Update
+            </button>
+            <span style={{ marginRight: "10px" }}></span>
+            <button className="btn btn-warning" onClick={handleDelete}>
+              Delete
+            </button>
           </div>
         </section>
 
         <section>
           <h2>Expenses</h2>
           <div>
-            <button className="btn btn-success" onClick={handleAddExpense}>Create New Expense</button>
+            <button className="btn btn-success" onClick={handleAddExpense}>
+              Create New Expense
+            </button>
           </div>
           <ExpenseCreationModal
             show={showExpenseModal}
@@ -189,8 +201,18 @@ function Budget() {
                 <p>Date: {expense.date.toLocaleString()}</p>
                 {/* <p>Expense ID: {expense._id}</p> */}
                 <div className="d-flex">
-                  <Link className="btn btn-primary" to={`/expenses/${expense._id}`}>View</Link>
-                  <button className="btn btn-warning" onClick={() => handleDeleteExpense(expense._id)}>Delete</button>
+                  <Link
+                    className="btn btn-primary"
+                    to={`/expenses/${expense._id}`}
+                  >
+                    View
+                  </Link>
+                  <button
+                    className="btn btn-warning"
+                    onClick={() => handleDeleteExpense(expense._id)}
+                  >
+                    Delete
+                  </button>
                 </div>
                 {/* Add more details as needed */}
               </div>
@@ -198,7 +220,9 @@ function Budget() {
           </div>
         </section>
         <div className="text-center pt-3">
-          <Link className="btn btn-primary" to="/">Back to Dashboard</Link>
+          <Link className="btn btn-primary" to="/">
+            Back to Dashboard
+          </Link>
         </div>
       </div>
     </>
