@@ -19,7 +19,7 @@ const BudgetList = ({ budgets, setShowModal, displayUser = false }) => {
         width: "80%",
         margin: "auto",
         overflow: "hidden",
-        minHeight: "356px",
+        height: "356px",
       }}
     >
       <div className="card-header d-flex justify-content-between align-items-center">
