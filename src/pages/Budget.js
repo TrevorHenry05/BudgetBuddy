@@ -118,7 +118,7 @@ function Budget() {
           navigate(`/groups/${budget.group._id}`);
         }
       } catch (err) {
-        console.log("Erroe: " + err);
+        console.log("Error: " + err);
       }
     }
   };
@@ -127,7 +127,10 @@ function Budget() {
     <>
       <div className="container-fluid my-4 p-3">
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <Link className="btn btn-outline-secondary" to="/dashboard">
+          <Link
+            className="btn btn-outline-secondary"
+            to={budget.group ? `/groups/${budget.group._id}` : "/dashboard"}
+          >
             <i className="bi bi-arrow-left"></i>
           </Link>
           <h1 className="mx-auto">Budget Details</h1>
