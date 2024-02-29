@@ -142,7 +142,7 @@ function Budget() {
         <section
           className="mb-5 p-3"
           style={{
-            backgroundColor: "#e9ecef",
+            backgroundColor: "white",
             borderRadius: "0.25rem",
             width: "80%",
             margin: "auto",
@@ -199,7 +199,7 @@ function Budget() {
 
         <section
           style={{
-            backgroundColor: "#e9ecef",
+            backgroundColor: "white",
             borderRadius: "0.25rem",
             width: "80%",
             margin: "auto",
