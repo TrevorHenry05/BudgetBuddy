@@ -6,24 +6,35 @@ import { API_URL } from "../constants";
 function Expense() {
   const { expenseId } = useParams();
   const navigate = useNavigate();
+  const token = localStorage.getItem("token");
 
   //page status
-  const { isEditable, setEditable } = useState(false);      //is the page currently editable
-  const { altered, setAltered } = useState(false);          //check if the page's details have been altered
+  const [isEditable, setEditable] = useState(false);      //is the page currently editable
+  const [altered, setAltered] = useState(false);          //check if the page's details have been altered
 
-  const { amount, setAmount } = useState(0);
-  const { description, setDescription } = useState('');
-  const { date, setDate } = useState({ date: new Date() });
+  const [expense, setExpense] = useState({
+    amount: 0,
+    date: "",
+    description: "",
+    userId: "",
+    categoryId: "",
+    groupId: "",
+    budgetId: ""
+  });
 
-  //ids
-  const { userID, setUserID } = useState("");
-  const { groupID, setGroupID } = useState("");
-  const { categoryID, setCategoryID } = useState("");
-  const { budgetID, setBudgetID } = useState("");
+  //save values to reset changes
+  const [orginalExpense, setOriginalExpense] = useState({
+    amount: 0,
+    date: "",
+    description: "",
+    userId: "",
+    categoryId: "",
+    groupId: "",
+    budgetId: ""
+  });
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    
+
     //fetch expense details
     const fetchExpenseData = async () => {
       const response = await axios.get(`${API_URL}/api/expenses/` + expenseId, {
@@ -31,13 +42,8 @@ function Expense() {
           Authorization: `Bearer ${token}`,
         },
       });
-      setAmount(response.amount);
-      setDate(response.date);
-      setDescription(response.description);
-      setUserID(response.userId);
-      setGroupID(response.groupId);
-      setCategoryID(response.categoryId);
-      setBudgetID(response.budgetId);
+      setExpense(response.data);
+      setOriginalExpense(response.data);
     };
 
     fetchExpenseData();
@@ -48,26 +54,24 @@ function Expense() {
   };
 
   const handleChange = (e) => {
-    setAltered(e);
+    const { name, value } = e.target;
+    setExpense(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  }
+
+  const handleCancel = () => {
+    setExpense(orginalExpense);
   }
 
   const handleSubmit = async (event) => {
     event.pereventDefault();
-    if (altered){
-      const token = localStorage.getItem("token");
-
+    if (altered) {
       const response = await axios.put(`${API_URL}/api/expenses/` + expenseId)
         .set("Authorization", `Bearer ${token}`)
-        .send({
-          amount: amount,
-          date: date,
-          description: description,
-          userId: userID,
-          categoryId: categoryID,
-          groupId: groupID,
-          budgetId: budgetID
-        });
-        if (response.statusCode === 200) window.alert("Expense details updated");
+        .send(expense);
+      if (response.statusCode === 200) window.alert("Expense details updated");
     } else {
       window.alert("No changes have been made!");
     }
@@ -93,13 +97,15 @@ function Expense() {
             </div>
             <div className="modal-body">
               <div>
+                <label htmlFor="amount" className="form-label" data-bs-placement="left">Amount</label>
+                <input type="number" className="form-control" data-bs-placement="left" name="amount" value={expense.amount} onChange={(e) => setExpense(e.target.value)} required />
                 <label htmlFor="date" className="form-label" data-bs-placement="right">Date</label>
-                <input type="date" className="form-control" data-bs-placement="right" id="date" value={date} onChange={(e) => setDate(e.target.value)} required/>
+                <input type="date" className="form-control" data-bs-placement="right" name="date" value={expense.date} onChange={(e) => setExpense(e.target.value)} required />
               </div>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleChange(false)}>Cancel</button>
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleCancel}>Cancel</button>
               <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDelete}>Delete</button>
             </div>
           </div>
