@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../constants";
+import ExpenseCreationModal from "../components/ExpenseCreationModal";
 
 function Budget() {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { budgetId } = useParams();
-
+  const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [budget, setBudget] = useState({
     totalBudget: "",
     purpose: "",
@@ -18,7 +19,6 @@ function Budget() {
     userId: "",
     budgetType: ""
   });
-
   const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function Budget() {
       }
     };
     fetchBudgetData();
-  }, []);
+  }, [budgetId, token]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +55,7 @@ function Budget() {
     const formattedEndDate = new Date(budget.endDate);
 
     try {
-      const response = await axios.put(`${API_URL}/api/budgets/${budgetId}`,
+      await axios.put(`${API_URL}/api/budgets/${budgetId}`,
         {
           "totalBudget": budget.totalBudget,
           "purpose": budget.purpose,
@@ -74,11 +74,33 @@ function Budget() {
     }
   };
 
+  const handleAddExpense = () => {
+    setShowExpenseModal(true);
+  };
+
+  const handleDeleteExpense = async (expenseId) => {
+    const deleteConfirmed = window.confirm('Are you sure about the deletion of this record permanently from the database?');
+    if (deleteConfirmed) {
+      try {
+        await axios.delete(`${API_URL}/api/expenses/${expenseId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            }
+          });
+        alert("Expense successfully deleted!");
+        setExpenses(prevExpenses => prevExpenses.filter(expense => expense._id !== expenseId));
+      } catch (err) {
+        console.log("Erroe: " + err);
+      }
+    }
+  };
+
   const handleDelete = async (e) => {
     const deleteConfirmed = window.confirm('Are you sure about the deletion of this record permanently from the database?');
     if (deleteConfirmed) {
       try {
-        const response = await axios.delete(`${API_URL}/api/budgets/${budgetId}`,
+        await axios.delete(`${API_URL}/api/budgets/${budgetId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -151,8 +173,13 @@ function Budget() {
         <section>
           <h2>Expenses</h2>
           <div>
-            <button className="btn btn-success" >Create New Expense</button>
+            <button className="btn btn-success" onClick={handleAddExpense}>Create New Expense</button>
           </div>
+          <ExpenseCreationModal
+            show={showExpenseModal}
+            handleClose={() => setShowExpenseModal(false)}
+            budgetId={budgetId}
+          />
           <div>
             {/* Render each expense item */}
             {expenses.map((expense, index) => (
@@ -163,13 +190,16 @@ function Budget() {
                 {/* <p>Expense ID: {expense._id}</p> */}
                 <div className="d-flex">
                   <Link className="btn btn-primary" to={`/expenses/${expense._id}`}>View</Link>
-                  <button className="btn btn-warning">Delete</button>
+                  <button className="btn btn-warning" onClick={() => handleDeleteExpense(expense._id)}>Delete</button>
                 </div>
                 {/* Add more details as needed */}
               </div>
             ))}
           </div>
         </section>
+        <div className="text-center pt-3">
+          <Link className="btn btn-primary" to="/">Back to Dashboard</Link>
+        </div>
       </div>
     </>
   );
