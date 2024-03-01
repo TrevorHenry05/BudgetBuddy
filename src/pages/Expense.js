@@ -141,137 +141,171 @@ function Expense() {
 
   return (
     <>
-      <section
-        style={{
-          backgroundColor: "white",
-          borderRadius: "0.25rem",
-          width: "90%",
-          margin: "auto",
-          padding: "20px",
-        }}
-      >
-        <div className="mb-3 d-flex justify-content-between align-items-center">
-          <h5 className="modal-title">Expense Details</h5>
-          <button
-            type="button"
-            className="btn btn-warning"
-            onClick={() => handleEdit(!isEditable)}
+      <div className="container-fluid my-4 p-3">
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <Link
+            className="btn btn-outline-secondary"
+            to={`/budgets/${expense.budgetId}`}
           >
-            Edit
-          </button>
+            <i className="bi bi-arrow-left"></i>
+          </Link>
+          <h1 className="mx-auto">Expense Details</h1>
+          <div className="btn btn-outline-secondary invisible">
+            <i className="bi bi-arrow-right"></i> Dashboard
+          </div>
         </div>
-        <div>
-          {/** Top Section */}
-          <div className="mb-3 d-flex justify-content-between align-items-center">
-            <p>Created by: {expense.user ? expense.user.username : "N/A"}</p>
+        <section
+          style={{
+            backgroundColor: "white",
+            borderRadius: "0.25rem",
+            width: "90%",
+            margin: "auto",
+            padding: "20px",
+            paddingTop: "100px",
+            position: "relative",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              padding: "10px",
+            }}
+          >
+            <button
+              type="button"
+              className="btn btn-warning"
+              onClick={() => handleEdit(!isEditable)}
+            >
+              Edit
+            </button>
+          </div>
+          <div>
+            {/** Top Section */}
+            <div className="mb-3 d-flex justify-content-between align-items-center">
+              <p>
+                <b>Created by: </b>
+                {expense.user ? expense.user.username : "N/A"}
+              </p>
+              <div>
+                <label
+                  htmlFor="date"
+                  className="form-label"
+                  data-bs-placement="right"
+                >
+                  Date
+                </label>
+                <input
+                  type="date"
+                  className="form-control"
+                  data-bs-placement="right"
+                  name="date"
+                  id="date"
+                  disabled={!isEditable}
+                  value={expense.date}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
             <div>
               <label
-                htmlFor="date"
+                htmlFor="amount"
                 className="form-label"
-                data-bs-placement="right"
+                data-bs-placement="left"
               >
-                Date
+                Amount
               </label>
               <input
-                type="date"
+                type="number"
                 className="form-control"
-                data-bs-placement="right"
-                name="date"
-                id="date"
+                data-bs-placement="left"
+                name="amount"
+                id="amount"
                 disabled={!isEditable}
-                value={expense.date}
+                value={expense.amount}
                 onChange={handleChange}
                 required
               />
             </div>
-          </div>
-          <div>
-            <label
-              htmlFor="amount"
-              className="form-label"
-              data-bs-placement="left"
-            >
-              Amount
-            </label>
-            <input
-              type="number"
-              className="form-control"
-              data-bs-placement="left"
-              name="amount"
-              id="amount"
-              disabled={!isEditable}
-              value={expense.amount}
-              onChange={handleChange}
-              required
-            />
+            <br />
+            <div>
+              <label
+                htmlFor="description"
+                className="form-label"
+                data-bs-placement="left"
+              >
+                Description
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                data-bs-placement="left"
+                name="description"
+                id="description"
+                disabled={!isEditable}
+                value={expense.description}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <br />
+            <div>
+              <label htmlFor="categoryId" className="form-label">
+                Category
+              </label>
+              <select
+                className="form-select"
+                id="categoryId"
+                disabled={!isEditable}
+                value={categoryId}
+                onChange={(e) => {
+                  setCategoryId(e.target.value);
+                  setAltered(true);
+                }}
+                required
+              >
+                <option value="">Select a category</option>
+                {expenseCategories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.categoryName}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <br />
-          <div>
-            <label
-              htmlFor="description"
-              className="form-label"
-              data-bs-placement="left"
-            >
-              Description
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              data-bs-placement="left"
-              name="description"
-              id="description"
-              disabled={!isEditable}
-              value={expense.description}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <br />
-          <div>
-            <label htmlFor="categoryId" className="form-label">
-              Category
-            </label>
-            <select
-              className="form-select"
-              id="categoryId"
-              disabled={!isEditable}
-              value={categoryId}
-              onChange={(e) => {
-                setCategoryId(e.target.value);
-                setAltered(true);
-              }}
-              required
-            >
-              <option value="">Select a category</option>
-              {expenseCategories.map((category) => (
-                <option key={category._id} value={category._id}>
-                  {category.categoryName}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <br />
-        <div className="mb-3 d-flex justify-content-between align-items-center">
-          <div></div>
-          <div>
-            {isEditable === true ? (
-              <div>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleSubmit}
-                >
-                  Save changes
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </button>
+          <div className="mb-3 d-flex justify-content-between align-items-center">
+            <div></div>
+            <div>
+              {isEditable === true ? (
+                <div>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSubmit}
+                  >
+                    Save changes
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    onClick={handleCancel}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    data-bs-dismiss="modal"
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </button>
+                </div>
+              ) : (
                 <button
                   type="button"
                   className="btn btn-danger"
@@ -280,28 +314,11 @@ function Expense() {
                 >
                   Delete
                 </button>
-              </div>
-            ) : (
-              <button
-                type="button"
-                className="btn btn-danger"
-                data-bs-dismiss="modal"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-            )}
+              )}
+            </div>
           </div>
-        </div>
-        <div className="text-center pt-3">
-          <Link
-            className="btn btn-primary"
-            to={"/budgets/" + orginalExpense.budgetId}
-          >
-            Back to Budget Details
-          </Link>
-        </div>
-      </section>
+        </section>
+      </div>
     </>
   );
 }

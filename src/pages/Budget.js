@@ -17,8 +17,8 @@ function Budget() {
     purpose: "",
     startDate: "",
     endDate: "",
-    group: "",
-    userId: "",
+    group: null,
+    user: null,
     budgetType: "",
   });
   const [expenses, setExpenses] = useState([]);
@@ -187,6 +187,9 @@ function Budget() {
         >
           <div className="row">
             <div className="col-md-6">
+              <div className="mb-3">
+                <b>Created by: </b> {budget.user ? budget.user.username : "N/A"}
+              </div>
               <div className="mb-3">
                 Purpose:{" "}
                 <input
