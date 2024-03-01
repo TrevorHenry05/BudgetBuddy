@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
+import { Doughnut } from "react-chartjs-2";
+import "chart.js/auto";
+
 import { API_URL } from "../constants";
 import ExpenseCreationModal from "../components/ExpenseCreationModal";
 
@@ -10,7 +13,7 @@ function Budget() {
   const { budgetId } = useParams();
   const [showExpenseModal, setShowExpenseModal] = useState(false);
   const [budget, setBudget] = useState({
-    totalBudget: "",
+    totalBudget: 0,
     purpose: "",
     startDate: "",
     endDate: "",
@@ -19,6 +22,7 @@ function Budget() {
     budgetType: "",
   });
   const [expenses, setExpenses] = useState([]);
+  const [remainingBudget, setRemainingBudget] = useState(0);
 
   useEffect(() => {
     // Fetch analysis data
@@ -32,6 +36,13 @@ function Budget() {
         //console.log(response);
         setBudget(response.data);
         setExpenses(response.data.expenses);
+
+        // Calculate remaining budget
+        const totalExpenses = response.data.expenses.reduce(
+          (acc, expense) => acc + expense.amount,
+          0
+        );
+        setRemainingBudget(response.data.totalBudget - totalExpenses);
       } catch (err) {
         console.log("Error: " + err);
       }
@@ -123,6 +134,19 @@ function Budget() {
     }
   };
 
+  const doughnutData = {
+    labels: ["Remaining Budget", "Spent"],
+    datasets: [
+      {
+        label: "Budget Overview",
+        data: [remainingBudget, budget.totalBudget - remainingBudget],
+        backgroundColor: ["#9678b6", "#40e0d0"],
+        borderColor: ["#a89cc8", "#36bfb6"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   return (
     <>
       <div className="container-fluid my-4 p-3">
@@ -148,52 +172,70 @@ function Budget() {
             margin: "auto",
           }}
         >
-          <div className="d-flex flex-row">
-            <div className="p-2">
-              Purpose:{" "}
-              <input
-                type="text"
-                name="purpose"
-                value={budget.purpose}
-                onChange={handleChange}
-              />
+          <div className="row">
+            <div className="col-md-6">
+              <div className="mb-3">
+                Purpose:{" "}
+                <input
+                  type="text"
+                  className="form-control"
+                  name="purpose"
+                  value={budget.purpose}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                Total Budget:{" "}
+                <input
+                  type="text"
+                  className="form-control"
+                  name="totalBudget"
+                  value={budget.totalBudget}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                Start Date:{" "}
+                <input
+                  type="date"
+                  className="form-control"
+                  name="startDate"
+                  value={budget.startDate}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                End Date:{" "}
+                <input
+                  type="date"
+                  className="form-control"
+                  name="endDate"
+                  value={budget.endDate}
+                  onChange={handleChange}
+                />
+              </div>
+              <div>
+                <button className="btn btn-success" onClick={handleUpdate}>
+                  Update
+                </button>
+                <span style={{ marginRight: "10px" }}></span>
+                <button className="btn btn-danger" onClick={handleDelete}>
+                  Delete
+                </button>
+              </div>
             </div>
-            <div className="p-2">
-              Total Budget:{" "}
-              <input
-                type="text"
-                name="totalBudget"
-                value={budget.totalBudget}
-                onChange={handleChange}
+            <div className="col-md-6">
+              <Doughnut
+                data={doughnutData}
+                options={{ maintainAspectRatio: false }}
+                style={{ maxHeight: "300px" }}
               />
+              <br />
+              <div className="text-center">
+                <h4>Spent: ${budget.totalBudget - remainingBudget}</h4>
+                <h4>Remaining Budget: ${remainingBudget}</h4>
+              </div>
             </div>
-            <div className="p-2">
-              Start Date:{" "}
-              <input
-                type="date"
-                name="startDate"
-                value={budget.startDate}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="p-2">
-              End Date:{" "}
-              <input
-                type="date"
-                name="endDate"
-                value={budget.endDate}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          <div>
-            <button className="btn btn-success" onClick={handleUpdate}>
-              Update
-            </button>
-            <span style={{ marginRight: "10px" }}></span>
-            <button className="btn btn-warning" onClick={handleDelete}>
-              Delete
-            </button>
           </div>
         </section>
 
@@ -224,6 +266,7 @@ function Budget() {
             show={showExpenseModal}
             handleClose={() => setShowExpenseModal(false)}
             budgetId={budgetId}
+            groupId={budget.group ? budget.group._id : null}
           />
           <div style={{ overflowY: "auto", height: "500px" }}>
             {/* Render each expense item */}

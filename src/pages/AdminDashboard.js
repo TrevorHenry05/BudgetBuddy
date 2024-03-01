@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Pie, Line } from "react-chartjs-2";
+import "chart.js/auto"; // For Chart.js 3
 import UserOverview from "../components/UserOverview";
 import GroupOverview from "../components/GroupOverview";
 import BudgetOverview from "../components/BudgetOverview";
@@ -17,6 +19,21 @@ function AdminDashboard() {
   const [budgetSearch, setBudgetSearch] = useState("");
   const [expenseSearch, setExpenseSearch] = useState("");
 
+  const [timeView, setTimeView] = useState("monthly");
+  const [budgetDistribution, setBudgetDistribution] = useState({
+    labels: [],
+    datasets: [{ data: [] }],
+  });
+
+  const [expensesDaily, setExpensesDaily] = useState({
+    labels: [],
+    datasets: [{ data: [] }],
+  });
+  const [expensesMonthly, setExpensesMonthly] = useState({
+    labels: [],
+    datasets: [{ data: [] }],
+  });
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -26,6 +43,60 @@ function AdminDashboard() {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      const { budgets, expenses } = response.data;
+
+      // Budget Distribution
+      const budgetTypes = budgets.reduce((acc, budget) => {
+        acc[budget.budgetType] =
+          (acc[budget.budgetType] || 0) + budget.totalBudget;
+        return acc;
+      }, {});
+
+      setBudgetDistribution({
+        labels: Object.keys(budgetTypes),
+        datasets: [{ data: Object.values(budgetTypes) }],
+      });
+
+      // Expenses Over Time
+      const expensesByDay = {};
+      const expensesByMonth = {};
+
+      expenses.forEach((expense) => {
+        const dayKey = expense.date;
+        const monthKey = expense.date.substring(0, 7);
+
+        expensesByDay[dayKey] = (expensesByDay[dayKey] || 0) + expense.amount;
+        expensesByMonth[monthKey] =
+          (expensesByMonth[monthKey] || 0) + expense.amount;
+      });
+
+      setExpensesDaily({
+        labels: Object.keys(expensesByDay),
+        datasets: [
+          {
+            label: "Expenses Per Day (USD)",
+            data: Object.values(expensesByDay),
+            backgroundColor: "#9678b6",
+            borderColor: "#a89cc8",
+          },
+        ],
+        label: "Expenses Over Time",
+      });
+
+      setExpensesMonthly({
+        labels: Object.keys(expensesByMonth),
+        datasets: [
+          {
+            label: "Expenses Per Month (USD)",
+            data: Object.values(expensesByMonth),
+            backgroundColor: "#40e0d0",
+            borderColor: "#36bfb6",
+          },
+        ],
+        label: "Expenses Over Time",
+      });
+
       setUsers(response.data.users);
       setGroups(response.data.groups);
       setBudgets(response.data.budgets);
@@ -33,6 +104,16 @@ function AdminDashboard() {
     };
 
     fetchAdminData();
+
+    setBudgetDistribution((prevState) => ({
+      ...prevState,
+      datasets: prevState.datasets.map((dataset) => ({
+        ...dataset,
+        backgroundColor: ["#9678b6", "#40e0d0"],
+        borderColor: ["#a89cc8", "#36bfb6"],
+      })),
+      label: "Budget Distribution",
+    }));
   }, []);
 
   const filteredUsers = users.filter(
@@ -68,7 +149,16 @@ function AdminDashboard() {
   return (
     <div className="container-fluid mt-4">
       <h1 className="text-center">Admin Dashboard</h1>
-      <div className="row mb-4 text-center">
+      <div
+        className="row mb-4 text-center"
+        style={{
+          backgroundColor: "white",
+          borderRadius: "0.25rem",
+          width: "90%",
+          margin: "auto",
+          padding: "20px",
+        }}
+      >
         <div className="col">
           <h4>Total Users</h4>
           <p>{filteredUsers.length}</p>
@@ -90,7 +180,16 @@ function AdminDashboard() {
           </p>
         </div>
       </div>
-      <div className="row">
+      <div
+        className="row"
+        style={{
+          backgroundColor: "white",
+          borderRadius: "0.25rem",
+          width: "90%",
+          margin: "auto",
+          padding: "20px",
+        }}
+      >
         <div className="col-lg-3 col-md-4 col-sm-6 mb-3">
           <input
             type="text"
@@ -134,6 +233,67 @@ function AdminDashboard() {
             style={{ width: "80%", minWidth: "300px", margin: "auto" }}
           />
           <ExpenseOverview expenses={filteredExpenses} />
+        </div>
+      </div>
+
+      <div
+        className="row mt-4"
+        style={{
+          backgroundColor: "white",
+          borderRadius: "0.25rem",
+          width: "90%",
+          margin: "auto",
+          height: "525px",
+          padding: "20px",
+          marginBottom: "20px",
+        }}
+      >
+        <div
+          className="col-md-6 d-flex flex-column align-items-center"
+          style={{ height: "400px" }}
+        >
+          <h4 className="text-center">Budget Distribution</h4>
+          <div
+            className="d-flex justify-content-center"
+            style={{ width: "100%", height: "100%" }}
+          >
+            <Pie
+              data={budgetDistribution}
+              options={{ maintainAspectRatio: true }}
+            />
+          </div>
+        </div>
+        <div
+          className="col-md-6 d-flex flex-column align-items-center"
+          style={{ height: "400px" }}
+        >
+          <h4 className="text-center">Expenses Over Time</h4>
+          <div
+            className="d-flex justify-content-center"
+            style={{ width: "100%", height: "100%" }}
+          >
+            {timeView === "daily" ? (
+              <Line
+                data={expensesDaily}
+                options={{ maintainAspectRatio: true }}
+              />
+            ) : (
+              <Line
+                data={expensesMonthly}
+                options={{ maintainAspectRatio: true }}
+              />
+            )}
+          </div>
+          <button
+            className="btn btn-warning"
+            onClick={() =>
+              setTimeView((prevView) =>
+                prevView === "monthly" ? "daily" : "monthly"
+              )
+            }
+          >
+            Switch to {timeView === "monthly" ? "Daily" : "Monthly"} View
+          </button>
         </div>
       </div>
     </div>
