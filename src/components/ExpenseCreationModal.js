@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../constants";
 
@@ -7,6 +7,7 @@ const ExpenseCreationModal = ({
   show,
   handleClose,
   budgetId,
+  setExpenses,
   groupId = null,
 }) => {
   const [description, setDescription] = useState("");
@@ -14,7 +15,7 @@ const ExpenseCreationModal = ({
   const [date, setDate] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [expenseCategories, setExpenseCategories] = useState([]);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -52,7 +53,21 @@ const ExpenseCreationModal = ({
         }
       );
 
-      navigate(`/expenses/${response.data.data._id}`);
+      const response2 = await axios.get(
+        `${API_URL}/api/expenses/${response.data.data._id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      setExpenses((prevExpenses) => [...prevExpenses, response2.data]);
+      setAmount("");
+      setDescription("");
+      setDate("");
+      setCategoryId("");
+      handleClose();
     } catch (error) {
       console.error("Error creating expense. Please try again.", error);
       alert("Error creating expense. Please try again.");

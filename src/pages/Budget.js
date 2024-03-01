@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Doughnut } from "react-chartjs-2";
@@ -22,7 +22,18 @@ function Budget() {
     budgetType: "",
   });
   const [expenses, setExpenses] = useState([]);
-  const [remainingBudget, setRemainingBudget] = useState(0);
+  const [doughnutData, setDoughnutData] = useState({
+    labels: ["Remaining Budget", "Spent"],
+    datasets: [
+      {
+        label: "Budget Overview",
+        data: [0, 0],
+        backgroundColor: ["#9678b6", "#40e0d0"],
+        borderColor: ["#a89cc8", "#36bfb6"],
+        borderWidth: 1,
+      },
+    ],
+  });
 
   useEffect(() => {
     // Fetch analysis data
@@ -36,19 +47,19 @@ function Budget() {
         //console.log(response);
         setBudget(response.data);
         setExpenses(response.data.expenses);
-
-        // Calculate remaining budget
-        const totalExpenses = response.data.expenses.reduce(
-          (acc, expense) => acc + expense.amount,
-          0
-        );
-        setRemainingBudget(response.data.totalBudget - totalExpenses);
       } catch (err) {
         console.log("Error: " + err);
       }
     };
     fetchBudgetData();
   }, [budgetId, token]);
+
+  const remainingBudget = useMemo(() => {
+    return (
+      budget.totalBudget -
+      expenses.reduce((acc, expense) => acc + expense.amount, 0)
+    );
+  }, [budget.totalBudget, expenses]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -134,18 +145,20 @@ function Budget() {
     }
   };
 
-  const doughnutData = {
-    labels: ["Remaining Budget", "Spent"],
-    datasets: [
-      {
-        label: "Budget Overview",
-        data: [remainingBudget, budget.totalBudget - remainingBudget],
-        backgroundColor: ["#9678b6", "#40e0d0"],
-        borderColor: ["#a89cc8", "#36bfb6"],
-        borderWidth: 1,
-      },
-    ],
-  };
+  useEffect(() => {
+    setDoughnutData({
+      labels: ["Remaining Budget", "Spent"],
+      datasets: [
+        {
+          label: "Budget Overview",
+          data: [remainingBudget, budget.totalBudget - remainingBudget],
+          backgroundColor: ["#9678b6", "#40e0d0"],
+          borderColor: ["#a89cc8", "#36bfb6"],
+          borderWidth: 1,
+        },
+      ],
+    });
+  }, [remainingBudget, budget.totalBudget]);
 
   return (
     <>
@@ -266,6 +279,7 @@ function Budget() {
             show={showExpenseModal}
             handleClose={() => setShowExpenseModal(false)}
             budgetId={budgetId}
+            setExpenses={setExpenses}
             groupId={budget.group ? budget.group._id : null}
           />
           <div style={{ overflowY: "auto", height: "500px" }}>
