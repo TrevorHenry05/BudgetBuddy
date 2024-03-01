@@ -11,8 +11,8 @@ function Expense() {
   const [expenseCategories, setExpenseCategories] = useState([]);
 
   //page status
-  const [isEditable, setEditable] = useState(false);      //is the page currently editable
-  const [altered, setAltered] = useState(false);          //check if the page's details have been altered
+  const [isEditable, setEditable] = useState(false); //is the page currently editable
+  const [altered, setAltered] = useState(false); //check if the page's details have been altered
 
   const [expense, setExpense] = useState({
     _id: "",
@@ -22,7 +22,7 @@ function Expense() {
     budgetId: "",
     group: "",
     category: "",
-    user: ""
+    user: "",
   });
 
   //save values to reset changes
@@ -34,7 +34,7 @@ function Expense() {
     budgetId: "",
     group: "",
     category: "",
-    user: ""
+    user: "",
   });
 
   useEffect(() => {
@@ -53,7 +53,6 @@ function Expense() {
         console.error("Failed to fetch expense categories", error);
       }
     };
-
 
     //fetch expense details
     const fetchExpenseData = async () => {
@@ -79,25 +78,26 @@ function Expense() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setExpense(prev => ({
+    setExpense((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     setAltered(true);
-  }
+  };
 
   const handleCancel = () => {
     setEditable(false);
     setExpense(orginalExpense);
     setCategoryId(orginalExpense.category._id);
     setAltered(false);
-  }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
       if (altered) {
-        const response = await axios.put(`${API_URL}/api/expenses/` + expenseId,
+        const response = await axios.put(
+          `${API_URL}/api/expenses/` + expenseId,
           {
             amount: expense.amount,
             date: expense.date,
@@ -107,8 +107,9 @@ function Expense() {
           {
             headers: {
               Authorization: `Bearer ${token}`,
-            }
-          });
+            },
+          }
+        );
         if (response.statusCode === 200) alert("Expense details updated");
         setEditable(false);
         setAltered(false);
@@ -118,52 +119,112 @@ function Expense() {
     } catch (err) {
       console.log("Error: " + err);
     }
-  }
+  };
 
   const handleDelete = async () => {
-    const deleteConfirmed = window.confirm('Are you sure about the deletion of this record permanently from the database?');
+    const deleteConfirmed = window.confirm(
+      "Are you sure about the deletion of this record permanently from the database?"
+    );
     if (deleteConfirmed) {
-      const response = await axios.delete(`${API_URL}/api/expenses/` + expenseId,
+      const response = await axios.delete(
+        `${API_URL}/api/expenses/` + expenseId,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-          }
-        });
+          },
+        }
+      );
       if (response.statusCode === 200) alert("Expense deleted");
       navigate("/budget/" + orginalExpense.budgetId);
     }
-  }
+  };
 
   return (
-    < >
-      <section style={{
-        backgroundColor: "white",
-        borderRadius: "0.25rem",
-        width: "90%",
-        margin: "auto",
-        padding: "20px"
-      }}>
+    <>
+      <section
+        style={{
+          backgroundColor: "white",
+          borderRadius: "0.25rem",
+          width: "90%",
+          margin: "auto",
+          padding: "20px",
+        }}
+      >
         <div className="mb-3 d-flex justify-content-between align-items-center">
           <h5 className="modal-title">Expense Details</h5>
-          <button type="button" className="btn btn-warning" onClick={() => handleEdit(!isEditable)}>Edit</button>
-        </div >
+          <button
+            type="button"
+            className="btn btn-warning"
+            onClick={() => handleEdit(!isEditable)}
+          >
+            Edit
+          </button>
+        </div>
         <div>
           {/** Top Section */}
           <div className="mb-3 d-flex justify-content-between align-items-center">
-            <p>User: {expense.user.username}</p>
+            <p>Created by: {expense.user ? expense.user.username : "N/A"}</p>
             <div>
-              <label htmlFor="date" className="form-label" data-bs-placement="right">Date</label>
-              <input type="date" className="form-control" data-bs-placement="right" name="date" id="date" disabled={!isEditable} value={expense.date} onChange={handleChange} required />
+              <label
+                htmlFor="date"
+                className="form-label"
+                data-bs-placement="right"
+              >
+                Date
+              </label>
+              <input
+                type="date"
+                className="form-control"
+                data-bs-placement="right"
+                name="date"
+                id="date"
+                disabled={!isEditable}
+                value={expense.date}
+                onChange={handleChange}
+                required
+              />
             </div>
           </div>
           <div>
-            <label htmlFor="amount" className="form-label" data-bs-placement="left">Amount</label>
-            <input type="number" className="form-control" data-bs-placement="left" name="amount" id="amount" disabled={!isEditable} value={expense.amount} onChange={handleChange} required />
+            <label
+              htmlFor="amount"
+              className="form-label"
+              data-bs-placement="left"
+            >
+              Amount
+            </label>
+            <input
+              type="number"
+              className="form-control"
+              data-bs-placement="left"
+              name="amount"
+              id="amount"
+              disabled={!isEditable}
+              value={expense.amount}
+              onChange={handleChange}
+              required
+            />
           </div>
           <br />
           <div>
-            <label htmlFor="description" className="form-label" data-bs-placement="left">Description</label>
-            <input type="text" className="form-control" data-bs-placement="left" name="description" id="description" disabled={!isEditable} value={expense.description} onChange={handleChange} required />
+            <label
+              htmlFor="description"
+              className="form-label"
+              data-bs-placement="left"
+            >
+              Description
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              data-bs-placement="left"
+              name="description"
+              id="description"
+              disabled={!isEditable}
+              value={expense.description}
+              onChange={handleChange}
+              required
+            />
           </div>
           <br />
           <div>
@@ -193,18 +254,52 @@ function Expense() {
         <br />
         <div className="mb-3 d-flex justify-content-between align-items-center">
           <div></div>
-          <div>{isEditable === true ? (
-            <div>
-              <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save changes</button>
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" onClick={handleCancel}>Cancel</button>
-              <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDelete}>Delete</button>
-            </div>
-          ) : (
-            <button type="button" className="btn btn-danger" data-bs-dismiss="modal" onClick={handleDelete}>Delete</button>
-          )}</div>
+          <div>
+            {isEditable === true ? (
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleSubmit}
+                >
+                  Save changes
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-danger"
+                  data-bs-dismiss="modal"
+                  onClick={handleDelete}
+                >
+                  Delete
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-dismiss="modal"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            )}
+          </div>
         </div>
         <div className="text-center pt-3">
-          <Link className="btn btn-primary" to={"/budgets/" + orginalExpense.budgetId}>Back to Budget Details</Link>
+          <Link
+            className="btn btn-primary"
+            to={"/budgets/" + orginalExpense.budgetId}
+          >
+            Back to Budget Details
+          </Link>
         </div>
       </section>
     </>
