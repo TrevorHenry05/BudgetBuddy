@@ -34,7 +34,6 @@ function Expense() {
   });
 
   useEffect(() => {
-
     //fetch expense details
     const fetchExpenseData = async () => {
       const response = await axios.get(`${API_URL}/api/expenses/` + expenseId, {
@@ -47,7 +46,7 @@ function Expense() {
     };
 
     fetchExpenseData();
-  }, [expenseId, amount, description, date, budgetID, groupID, userID, categoryID]);
+  }, [expenseId, token]);
 
   const handleEdit = (e) => {
     setEditable(e);
@@ -59,10 +58,12 @@ function Expense() {
       ...prev,
       [name]: value
     }));
+    setAltered(true);
   }
 
   const handleCancel = () => {
     setExpense(orginalExpense);
+    setAltered(false);
   }
 
   const handleSubmit = async (event) => {
@@ -72,18 +73,17 @@ function Expense() {
         .set("Authorization", `Bearer ${token}`)
         .send(expense);
       if (response.statusCode === 200) window.alert("Expense details updated");
+      
     } else {
       window.alert("No changes have been made!");
     }
   }
 
   const handleDelete = async () => {
-    const token = localStorage.getItem("token");
-
     const response = await axios.delete(`${API_URL}/api/expenses/` + expenseId)
       .set("Authorization", `Bearer ${token}`);
     if (response.statusCode === 200) window.alert("Expense deleted")
-    navigate("/budget/" + budgetID);
+    navigate("/budget/" + orginalExpense.budgetID);
   }
 
   return (
@@ -97,10 +97,25 @@ function Expense() {
             </div>
             <div className="modal-body">
               <div>
-                <label htmlFor="amount" className="form-label" data-bs-placement="left">Amount</label>
-                <input type="number" className="form-control" data-bs-placement="left" name="amount" value={expense.amount} onChange={(e) => setExpense(e.target.value)} required />
-                <label htmlFor="date" className="form-label" data-bs-placement="right">Date</label>
-                <input type="date" className="form-control" data-bs-placement="right" name="date" value={expense.date} onChange={(e) => setExpense(e.target.value)} required />
+                {/** Top Section */}
+                <div>
+                  <label htmlFor="amount" className="form-label" data-bs-placement="left">Amount</label>
+                  <label htmlFor="date" className="form-label" data-bs-placement="right">Date</label>
+                </div>
+                <div>
+                  <input type="number" className="form-control" data-bs-placement="left" name="amount" value={expense.amount} onChange={(e) => handleChange(e.target.value)} required />
+                  <input type="date" className="form-control" data-bs-placement="right" name="date" value={expense.date} onChange={(e) => handleChange(e.target.value)} required />
+                </div>
+
+                <div>
+                  <label htmlFor="amount" className="form-label" data-bs-placement="left">Amount</label>
+                </div>
+                <div>
+                  <input type="text" className="form-control" data-bs-placement="left" name="amount" value={expense.amount} onChange={(e) => handleChange(e.target.value)} required />
+                </div>
+
+                {/** Bottom Section */}
+
               </div>
             </div>
             <div className="modal-footer">
