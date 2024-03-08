@@ -10,6 +10,7 @@ function SignUpPage() {
     username: "",
     email: "",
     password: "",
+    repassword: ""
   });
   const navigate = useNavigate();
 
@@ -21,24 +22,28 @@ function SignUpPage() {
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent default form submission behavior
 
-    fetch(`${API_URL}/api/auth/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.token) {
-          localStorage.setItem("token", data.token);
-          navigate("/dashboard");
-        } else {
-          navigate("/");
-        }
+    if (user.password === user.repassword) {
+      fetch(`${API_URL}/api/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
       })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("An error occurred. Please try again.");
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.token) {
+            localStorage.setItem("token", data.token);
+            navigate("/dashboard");
+          } else {
+            navigate("/");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again.");
+        });
+    } else {
+      alert("Passwords didn't match! Please check again.");
+    }
   };
 
   return (
