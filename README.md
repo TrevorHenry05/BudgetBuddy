@@ -1,3 +1,7 @@
+# BudgetBuddy
+
+BudgetBuddy design: https://docs.google.com/document/d/1jiKcftH9vXB7C5jSEh3S1I3w7lSBTR-goDHvSqoluqM/edit?usp=sharing
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
